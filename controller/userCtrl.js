@@ -25,7 +25,8 @@ module.exports = {
   updateUserStatus:updateUserStatus,
   updateUser:updateUser,
   // sendMsg:sendMsg
-  allUsers:allUsers
+  allUsers:allUsers,
+  login:login
   
 
 };
@@ -198,24 +199,23 @@ function signup(req, res) {
   async function allUsers(req, res){
   let newData = await userSchema.find({})
   if(newData.length > 0){
-    let check = [];
-    newData.map(element =>{
-      console.log("checking the element", element)
-      check.push({
-        name : element.name,
-        designation: element.designation,
-        phoneNumber:element.phoneNumber,
-        
-      })
+    
       
 
-    })
-  res.status(200).json({message:"Data Fetched", data: check})
+   
+  res.status(200).json({message:"Data Fetched", data: newData})
   }else{
     console.log("something wrong")
 
   }
   }
+
+ async function login(req, res){
+  let userEmail  = await userSchema.findOne({email:req.body.email})
+  if(userEmail){
+    console.log("this is the user", userEmail)
+  }
+ }
 
  
 

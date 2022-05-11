@@ -10,6 +10,7 @@
     router.post("/update-user", user.updateUser);
     // router.post("/send", user.sendMsg)
     router.get('/users', user.allUsers)
+    router.post('/login', user.login)
 
 
     

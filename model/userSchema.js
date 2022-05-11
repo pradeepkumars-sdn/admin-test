@@ -23,7 +23,8 @@ let user = new Schema({
    isDeleted: {
       type: Boolean,
      default:false
-   }
+   },
+   token: { type: String },
 }, {
    collection: 'user'
 })
