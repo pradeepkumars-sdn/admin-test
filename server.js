@@ -5,14 +5,25 @@ const mongoose = require('mongoose')
 const fs = require('fs')
 const path = require('path')
 var morgan = require('morgan')
-const port = 4000;
+const port = 3000;
 require('dotenv').config()
 const cors = require('cors')
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({extended:true, limit: '50mb'}));
+
+app.use(function(req, res, next) {
+  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+    jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', function(err, decode) {
+      if (err) req.user = undefined;
+      req.user = decode;
+      next();
+    });
+  } else {
+    req.user = undefined;
+    next();
+  }
+});
 
 app.use(cors());
 app.use(function(req, res, next) {

@@ -25,6 +25,11 @@ let user = new Schema({
      default:false
    },
    token: { type: String },
+   img:
+	{
+		data: Buffer,
+		contentType: String
+	}
 }, {
    collection: 'user'
 })
@@ -49,11 +54,13 @@ user.pre('save', function(next) {
    });
 });
     
-user.methods.comparePassword = function(candidatePassword, cb) {
-   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-       if (err) return cb(err);
-       cb(null, isMatch);
-   });
-};
+// user.methods.comparePassword = function(candidatePassword, cb) {
+//    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+//        if (err) return cb(err);
+//        cb(null, isMatch);
+//    });
+// };
+
+
 
 module.exports = mongoose.model('user', user)
